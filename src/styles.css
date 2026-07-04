@@ -2520,8 +2520,8 @@ body {
 
 .controls {
   display: grid;
-  grid-template-columns: minmax(240px, 1fr) 148px 130px minmax(160px, 0.7fr);
-  gap: 12px;
+  grid-template-columns: minmax(210px, 300px) minmax(156px, 0.45fr) minmax(130px, 0.42fr) minmax(160px, 0.7fr);
+  gap: 18px;
   align-items: end;
   min-width: 0;
 }
@@ -2549,9 +2549,18 @@ body {
 
 .dice-picker {
   display: grid;
-  grid-template-columns: repeat(6, minmax(44px, 1fr));
+  grid-template-columns: repeat(3, minmax(52px, 1fr));
   gap: 6px;
   min-width: 0;
+}
+
+.field {
+  min-width: 0;
+}
+
+.field:has(.quantity-stepper) {
+  border-left: 1px solid rgba(236, 205, 115, 0.22);
+  padding-left: 18px;
 }
 
 .die-button,
