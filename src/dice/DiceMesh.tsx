@@ -109,18 +109,18 @@ function getFacePlacements(geometry: ReturnType<typeof createDiceGeometry>, side
 function getDodecahedronFacePlacements(geometry: ReturnType<typeof createDiceGeometry>): FacePlacement[] {
   const phi = (1 + Math.sqrt(5)) / 2;
   const normals = [
-    [0, 1, phi],
-    [0, -1, phi],
-    [0, 1, -phi],
-    [0, -1, -phi],
-    [1, phi, 0],
-    [-1, phi, 0],
-    [1, -phi, 0],
-    [-1, -phi, 0],
-    [phi, 0, 1],
-    [-phi, 0, 1],
-    [phi, 0, -1],
-    [-phi, 0, -1],
+    [0, phi, 1],
+    [0, phi, -1],
+    [0, -phi, 1],
+    [0, -phi, -1],
+    [phi, 1, 0],
+    [phi, -1, 0],
+    [-phi, 1, 0],
+    [-phi, -1, 0],
+    [1, 0, phi],
+    [-1, 0, phi],
+    [1, 0, -phi],
+    [-1, 0, -phi],
   ].map(([x, y, z]) => new Vector3(x, y, z).normalize());
 
   return normals
