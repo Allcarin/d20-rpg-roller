@@ -28,19 +28,21 @@ export function getGeometryScale(sides: DiceSides): number {
 
 function createPentagonalBipyramidGeometry(): BufferGeometry {
   const geometry = new BufferGeometry();
-  const radius = 1.04;
-  const top = [0, 1.36, 0];
-  const bottom = [0, -1.36, 0];
-  const ring = Array.from({ length: 5 }, (_, index) => {
-    const angle = (index / 5) * Math.PI * 2 + Math.PI / 10;
+  const sideCount = 5;
+  const radius = 1.18;
+  const height = 1.28;
+  const top = [0, height, 0];
+  const bottom = [0, -height, 0];
+  const ring = Array.from({ length: sideCount }, (_, index) => {
+    const angle = (index / sideCount) * Math.PI * 2 + Math.PI / 10;
     return [Math.cos(angle) * radius, 0, Math.sin(angle) * radius];
   });
   const positions: number[] = [];
 
   for (let index = 0; index < ring.length; index += 1) {
     const next = (index + 1) % ring.length;
-    positions.push(...top, ...ring[index], ...ring[next]);
-    positions.push(...bottom, ...ring[next], ...ring[index]);
+    positions.push(...top, ...ring[next], ...ring[index]);
+    positions.push(...bottom, ...ring[index], ...ring[next]);
   }
 
   geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));

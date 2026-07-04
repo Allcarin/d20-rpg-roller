@@ -1,8 +1,8 @@
 import {
   CanvasTexture,
   Color,
-  DoubleSide,
   EdgesGeometry,
+  FrontSide,
   Group,
   LineBasicMaterial,
   LineSegments,
@@ -81,7 +81,7 @@ function createFaceLabels(placements: FacePlacement[], values: string[], sides: 
       transparent: true,
       depthTest: true,
       depthWrite: false,
-      side: DoubleSide,
+      side: FrontSide,
       polygonOffset: true,
       polygonOffsetFactor: -1,
       polygonOffsetUnits: -1,
