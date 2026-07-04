@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build --base=./ --emptyOutDir=false",
+    "preview": "vite preview --host 127.0.0.1",
+    "validate:campaign": "node scripts/validate-campaign.mjs"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "three": "^0.185.1",
+    "vite": "latest"
+  }
+}

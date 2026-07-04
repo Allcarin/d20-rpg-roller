@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "savegame.schema.json",
+  "title": "RPG Save Game",
+  "type": "object",
+  "required": ["canonVersion", "campaign", "character", "inventory", "quests", "knownNpcs", "sceneId", "flags", "history"],
+  "properties": {
+    "canonVersion": { "type": "string" },
+    "campaign": {
+      "type": "object",
+      "required": ["id", "title"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "appTitle": { "type": "string" },
+        "tone": { "type": "string" }
+      }
+    },
+    "character": { "type": "object" },
+    "inventory": { "type": "array" },
+    "quests": { "type": "array" },
+    "knownNpcs": { "type": "array" },
+    "factions": { "type": "array" },
+    "centralEntity": { "type": ["object", "null"] },
+    "centralMystery": { "type": "string" },
+    "sceneId": { "type": "string" },
+    "flags": { "type": "array", "items": { "type": "string" } },
+    "pendingCheck": { "type": ["object", "null"] },
+    "lastOutcome": { "type": ["object", "null"] },
+    "freeActionFeedback": { "type": ["object", "null"] },
+    "history": { "type": "array", "items": { "type": "object" } }
+  }
+}
+

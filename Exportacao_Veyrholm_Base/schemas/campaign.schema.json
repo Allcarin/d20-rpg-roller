@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "campaign.schema.json",
+  "title": "RPG Campaign",
+  "type": "object",
+  "required": ["id", "title", "canonVersion", "activeSceneId", "character", "inventory", "quests", "knownNpcs", "factions", "initialHistory", "scenes"],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "appTitle": { "type": "string" },
+    "canonVersion": { "type": "string" },
+    "tone": { "type": "string" },
+    "activeSceneId": { "type": "string" },
+    "initialFlags": { "type": "array", "items": { "type": "string" } },
+    "character": { "$ref": "#/$defs/character" },
+    "inventory": { "type": "array", "items": { "$ref": "#/$defs/item" } },
+    "quests": { "type": "array", "items": { "$ref": "#/$defs/quest" } },
+    "knownNpcs": { "type": "array", "items": { "$ref": "#/$defs/npc" } },
+    "factions": { "type": "array", "items": { "$ref": "#/$defs/faction" } },
+    "centralEntity": { "type": ["object", "null"] },
+    "centralMystery": { "type": "string" },
+    "initialHistory": { "type": "array", "items": { "$ref": "#/$defs/historyEvent" } },
+    "scenes": { "type": "array", "items": { "$ref": "#/$defs/scene" }, "minItems": 1 }
+  },
+  "$defs": {
+    "character": {
+      "type": "object",
+      "required": ["id", "name", "class", "level", "life", "maxLife", "faith", "maxFaith", "attributes", "statuses"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "class": { "type": "string" },
+        "titles": { "type": "array", "items": { "type": "string" } },
+        "level": { "type": "number" },
+        "life": { "type": "number" },
+        "maxLife": { "type": "number" },
+        "faith": { "type": "number" },
+        "maxFaith": { "type": "number" },
+        "faithLabel": { "type": ["string", "null"] },
+        "awakenedAshes": { "type": "number" },
+        "attributes": { "type": "object", "additionalProperties": { "type": "number" } },
+        "statuses": { "type": "array", "items": { "oneOf": [{ "type": "string" }, { "$ref": "#/$defs/status" }] } }
+      }
+    },
+    "status": {
+      "type": "object",
+      "required": ["id", "label", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "symbol": { "type": "string" }
+      }
+    },
+    "item": {
+      "type": "object",
+      "required": ["id", "name", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "symbol": { "type": "string" },
+        "iconClass": { "type": "string" },
+        "equipped": { "type": "boolean" }
+      }
+    },
+    "quest": {
+      "type": "object",
+      "required": ["id", "title", "status", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "status": { "type": "string" },
+        "progress": { "type": "number", "minimum": 0, "maximum": 100 },
+        "stepsDone": { "type": "number" },
+        "stepsTotal": { "type": "number" },
+        "description": { "type": "string" }
+      }
+    },
+    "npc": {
+      "type": "object",
+      "required": ["id", "name", "role", "disposition"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "disposition": { "type": "string" }
+      }
+    },
+    "faction": {
+      "type": "object",
+      "required": ["id", "name", "stance", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "stance": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "required": ["id", "chapter", "title", "location", "body", "choices"],
+      "properties": {
+        "id": { "type": "string" },
+        "chapter": { "type": "string" },
+        "title": { "type": "string" },
+        "location": { "type": "string" },
+        "body": { "type": "string" },
+        "choices": { "type": "array", "items": { "$ref": "#/$defs/choice" } },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
+        "flagsRequired": { "type": "array", "items": { "type": "string" } },
+        "flagsSet": { "type": "array", "items": { "type": "string" } },
+        "nextSceneId": { "type": ["string", "null"] },
+        "freeActionResponse": { "type": "string" }
+      }
+    },
+    "choice": {
+      "type": "object",
+      "required": ["id", "label", "kind", "action"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "kind": { "type": "string" },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
+        "flagsRequired": { "type": "array", "items": { "type": "string" } },
+        "flagsSet": { "type": "array", "items": { "type": "string" } },
+        "nextSceneId": { "type": ["string", "null"] },
+        "check": { "oneOf": [{ "$ref": "#/$defs/check" }, { "type": "null" }] },
+        "action": { "type": "string" }
+      }
+    },
+    "check": {
+      "type": "object",
+      "required": ["attribute", "difficulty", "reason", "outcomes"],
+      "properties": {
+        "attribute": { "type": "string" },
+        "difficulty": { "type": "number" },
+        "reason": { "type": "string" },
+        "outcomes": {
+          "type": "object",
+          "required": ["criticalSuccess", "success", "failure", "criticalFailure"],
+          "properties": {
+            "criticalSuccess": { "$ref": "#/$defs/outcome" },
+            "success": { "$ref": "#/$defs/outcome" },
+            "failure": { "$ref": "#/$defs/outcome" },
+            "criticalFailure": { "$ref": "#/$defs/outcome" }
+          }
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "required": ["body", "summary", "effects"],
+      "properties": {
+        "body": { "type": "string" },
+        "summary": { "type": "string" },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "$ref": "#/$defs/status" }
+      }
+    },
+    "historyEvent": {
+      "type": "object",
+      "required": ["type", "text"],
+      "properties": {
+        "type": { "type": "string" },
+        "text": { "type": "string" },
+        "roll": { "type": "object" }
+      }
+    }
+  }
+}
+

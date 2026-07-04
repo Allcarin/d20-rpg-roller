@@ -1,0 +1,158 @@
+{
+  "id": "base-rpg-exemplo",
+  "title": "Base RPG Exemplo",
+  "appTitle": "Codice Base",
+  "canonVersion": "base-1",
+  "tone": "fantasia sombria adaptavel",
+  "activeSceneId": "inicio",
+  "initialFlags": [],
+  "character": {
+    "id": "hero",
+    "name": "Heroi",
+    "class": "Viajante",
+    "titles": [],
+    "level": 1,
+    "life": 20,
+    "maxLife": 20,
+    "faith": 5,
+    "maxFaith": 10,
+    "faithLabel": null,
+    "attributes": {
+      "vigor": 1,
+      "conhecimento": 0,
+      "agilidade": 1,
+      "presenca": 0
+    },
+    "statuses": []
+  },
+  "inventory": [
+    {
+      "id": "lamp",
+      "name": "Lanterna",
+      "description": "Uma fonte de luz simples.",
+      "symbol": "seal",
+      "iconClass": "relic"
+    }
+  ],
+  "quests": [
+    {
+      "id": "find-road",
+      "title": "Encontrar a Estrada",
+      "status": "ativa",
+      "progress": 0,
+      "stepsDone": 0,
+      "stepsTotal": 3,
+      "description": "Descobrir para onde seguir."
+    }
+  ],
+  "knownNpcs": [],
+  "factions": [],
+  "centralEntity": {
+    "id": "unknown",
+    "name": "A Ameaca",
+    "nature": "Forca antagonica da campanha.",
+    "rule": "Defina uma regra simples que guie o misterio."
+  },
+  "centralMystery": "Qual verdade move a aventura?",
+  "initialHistory": [
+    {
+      "type": "narrative",
+      "text": "A campanha comeca."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "inicio",
+      "chapter": "Capitulo 1",
+      "title": "Primeiro Passo",
+      "location": "Encruzilhada",
+      "body": "O heroi esta diante de uma estrada incerta.",
+      "choices": [
+        {
+          "id": "observe-road",
+          "label": "Observar a estrada",
+          "kind": "investigation",
+          "effects": [],
+          "flagsRequired": [],
+          "flagsSet": ["road_observed"],
+          "nextSceneId": "estrada-observada",
+          "check": {
+            "attribute": "conhecimento",
+            "difficulty": 10,
+            "reason": "encontrar sinais recentes",
+            "outcomes": {
+              "criticalSuccess": {
+                "body": "Os sinais revelam tambem quem passou por ali.",
+                "summary": "Sucesso critico.",
+                "effects": []
+              },
+              "success": {
+                "body": "Os sinais apontam uma direcao segura.",
+                "summary": "Sucesso.",
+                "effects": []
+              },
+              "failure": {
+                "body": "Os sinais confundem mais do que ajudam.",
+                "summary": "Falha.",
+                "effects": []
+              },
+              "criticalFailure": {
+                "body": "Uma pista falsa atrai perigo.",
+                "summary": "Falha critica.",
+                "effects": [
+                  {
+                    "type": "life",
+                    "amount": -2
+                  }
+                ]
+              }
+            }
+          },
+          "action": "scene"
+        },
+        {
+          "id": "walk-forward",
+          "label": "Seguir em frente",
+          "kind": "common",
+          "effects": [],
+          "flagsRequired": [],
+          "flagsSet": ["walked_forward"],
+          "nextSceneId": "estrada-observada",
+          "check": null,
+          "action": "scene"
+        }
+      ],
+      "effects": [],
+      "flagsRequired": [],
+      "flagsSet": [],
+      "nextSceneId": null,
+      "freeActionResponse": "A acao e registrada, mas a cena permanece aberta."
+    },
+    {
+      "id": "estrada-observada",
+      "chapter": "Capitulo 1",
+      "title": "Sinais na Poeira",
+      "location": "Estrada",
+      "body": "Algo passou por aqui antes do amanhecer.",
+      "choices": [
+        {
+          "id": "free-note",
+          "label": "Registrar outra acao",
+          "kind": "common",
+          "effects": [],
+          "flagsRequired": [],
+          "flagsSet": [],
+          "nextSceneId": null,
+          "check": null,
+          "action": "free"
+        }
+      ],
+      "effects": [],
+      "flagsRequired": [],
+      "flagsSet": [],
+      "nextSceneId": null,
+      "freeActionResponse": "A campanha aguarda a proxima cena."
+    }
+  ]
+}
+

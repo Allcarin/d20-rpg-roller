@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D20 RPG Roller</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main class="dice-app-shell">
+      <section class="roller-panel" aria-labelledby="app-title">
+        <div class="roller-panel__header">
+          <div>
+            <p class="eyebrow">Bancada de rolagem</p>
+            <h1 id="app-title">D20 RPG Roller</h1>
+          </div>
+          <div class="roller-panel__actions">
+            <span class="status-pill" data-active-die>D20 ativo</span>
+            <button aria-pressed="true" class="sound-toggle" data-sound-toggle type="button">Som ligado</button>
+          </div>
+        </div>
+
+        <div class="stage" aria-live="polite">
+          <div class="die-orbit" data-die-orbit>
+            <div class="dice-scene" data-dice-scene aria-label="D20 em 3D"></div>
+            <div class="dice-scene__overlay" data-die-overlay>
+              <span>D20</span>
+              <strong>20</strong>
+            </div>
+          </div>
+
+          <div class="roll-summary">
+            <span class="roll-summary__label" data-roll-formula>1xD20</span>
+            <strong class="roll-summary__total roll-summary__total--neutral" data-roll-total>20</strong>
+            <small data-roll-status>Clique em rolar para resolver</small>
+          </div>
+        </div>
+
+        <div class="roll-strip" aria-label="Resultados individuais" data-roll-strip>
+          <span class="roll-chip">20</span>
+        </div>
+
+        <div class="controls" aria-label="Controles de rolagem">
+          <fieldset class="control-group">
+            <legend>Tipo de dado</legend>
+            <div class="dice-picker" data-dice-picker></div>
+          </fieldset>
+
+          <div class="field">
+            <span>Multiplicador</span>
+            <div class="quantity-stepper" aria-label="Multiplicador de rolagens">
+              <button aria-label="Diminuir multiplicador" data-quantity-decrease type="button">&minus;</button>
+              <strong data-quantity-value>1x</strong>
+              <button aria-label="Aumentar multiplicador" data-quantity-increase type="button">+</button>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>Modificador</span>
+            <input data-modifier max="99" min="-99" type="number" value="0" />
+          </label>
+
+          <button class="roll-button" data-roll-button type="button">Rolar D20</button>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="Historico de rolagens">
+        <div class="side-panel__header">
+          <h2>Historico</h2>
+          <button class="ghost-button" data-clear-history type="button">Limpar</button>
+        </div>
+
+        <div class="empty-state" data-featured-result>
+          <strong>Pronto para rolar</strong>
+          <span>D20 comeca no centro, os demais ja estao no seletor.</span>
+        </div>
+
+        <ol class="history-list" data-history-list></ol>
+      </aside>
+    </main>
+
+    <script type="module" src="/src/vanilla-dice.js"></script>
+  </body>
+</html>

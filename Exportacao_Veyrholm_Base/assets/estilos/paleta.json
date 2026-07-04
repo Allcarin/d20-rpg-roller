@@ -1,0 +1,18 @@
+{
+  "bg": "#050403",
+  "panel": "rgba(20, 17, 13, 0.94)",
+  "panelRaised": "rgba(27, 23, 17, 0.96)",
+  "panelSoft": "rgba(43, 35, 25, 0.7)",
+  "ink": "#efe6cf",
+  "muted": "#b8a98a",
+  "gold": "#8c7440",
+  "goldBright": "#d8c17a",
+  "faith": "#c9c2a3",
+  "blood": "#4a1412",
+  "bloodBright": "#8e2b24",
+  "spectral": "#8fb6c7",
+  "line": "rgba(140, 116, 64, 0.54)",
+  "lineSoft": "rgba(216, 193, 122, 0.18)",
+  "shadow": "rgba(0, 0, 0, 0.68)"
+}
+
