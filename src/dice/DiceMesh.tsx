@@ -50,7 +50,7 @@ export function createDiceMesh(sides: DiceSides, tone: DiceTone): Group {
     opacity: 0.28,
   });
   const edges = new LineSegments(new EdgesGeometry(geometry, 18), edgeMaterial);
-  const placements = getFacePlacements(geometry);
+  const placements = getFacePlacements(geometry, sides);
   const values = getFaceValues(sides, placements.length);
   const labels = createFaceLabels(placements, values, sides);
   const scale = getGeometryScale(sides);
@@ -101,7 +101,57 @@ type FacePlacement = {
   normal: Vector3;
 };
 
-function getFacePlacements(geometry: ReturnType<typeof createDiceGeometry>): FacePlacement[] {
+function getFacePlacements(geometry: ReturnType<typeof createDiceGeometry>, sides: DiceSides): FacePlacement[] {
+  if (sides === 12) return getDodecahedronFacePlacements(geometry);
+  return getPlanarFacePlacements(geometry);
+}
+
+function getDodecahedronFacePlacements(geometry: ReturnType<typeof createDiceGeometry>): FacePlacement[] {
+  const phi = (1 + Math.sqrt(5)) / 2;
+  const normals = [
+    [0, 1, phi],
+    [0, -1, phi],
+    [0, 1, -phi],
+    [0, -1, -phi],
+    [1, phi, 0],
+    [-1, phi, 0],
+    [1, -phi, 0],
+    [-1, -phi, 0],
+    [phi, 0, 1],
+    [-phi, 0, 1],
+    [phi, 0, -1],
+    [-phi, 0, -1],
+  ].map(([x, y, z]) => new Vector3(x, y, z).normalize());
+
+  return normals
+    .map((normal) => {
+      const distance = getSupportDistance(geometry, normal);
+      return {
+        center: normal.clone().multiplyScalar(distance),
+        normal,
+      };
+    })
+    .sort((left, right) => {
+      const vertical = right.normal.y - left.normal.y;
+      if (Math.abs(vertical) > 0.001) return vertical;
+      return Math.atan2(left.normal.z, left.normal.x) - Math.atan2(right.normal.z, right.normal.x);
+    });
+}
+
+function getSupportDistance(geometry: ReturnType<typeof createDiceGeometry>, normal: Vector3): number {
+  const position = geometry.getAttribute('position');
+  const vertex = new Vector3();
+  let distance = -Infinity;
+
+  for (let index = 0; index < position.count; index += 1) {
+    vertex.fromBufferAttribute(position, index);
+    distance = Math.max(distance, vertex.dot(normal));
+  }
+
+  return distance;
+}
+
+function getPlanarFacePlacements(geometry: ReturnType<typeof createDiceGeometry>): FacePlacement[] {
   const position = geometry.getAttribute('position');
   const index = geometry.index;
   const triangles: Array<{ center: Vector3; normal: Vector3; vertices: Vector3[] }> = [];
@@ -189,7 +239,7 @@ function getLabelSize(sides: DiceSides): number {
   if (sides === 6) return 0.92;
   if (sides === 12) return 0.58;
   if (sides === 20) return 0.74;
-  if (sides === 10 || sides === 100) return 0.6;
+  if (sides === 10 || sides === 100) return 0.74;
   return 0.66;
 }
 

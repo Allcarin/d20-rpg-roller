@@ -17,22 +17,22 @@ export function createDiceGeometry(sides: DiceSides): BufferGeometry {
   if (sides === 20) return new IcosahedronGeometry(1.5, 0);
 
   // Temporary faceted stand-in for D10/D100 until numbered GLB/GLTF assets are added.
-  return createDecagonalBipyramidGeometry();
+  return createPentagonalBipyramidGeometry();
 }
 
 export function getGeometryScale(sides: DiceSides): number {
   if (sides === 6) return 0.78;
-  if (sides === 10 || sides === 100) return 0.92;
+  if (sides === 10 || sides === 100) return 1.04;
   return 1;
 }
 
-function createDecagonalBipyramidGeometry(): BufferGeometry {
+function createPentagonalBipyramidGeometry(): BufferGeometry {
   const geometry = new BufferGeometry();
-  const radius = 1.18;
-  const top = [0, 1.15, 0];
-  const bottom = [0, -1.15, 0];
-  const ring = Array.from({ length: 10 }, (_, index) => {
-    const angle = (index / 10) * Math.PI * 2 + Math.PI / 10;
+  const radius = 1.32;
+  const top = [0, 0.92, 0];
+  const bottom = [0, -0.92, 0];
+  const ring = Array.from({ length: 5 }, (_, index) => {
+    const angle = (index / 5) * Math.PI * 2 + Math.PI / 10;
     return [Math.cos(angle) * radius, 0, Math.sin(angle) * radius];
   });
   const positions: number[] = [];
